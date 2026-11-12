@@ -1,0 +1,21 @@
+MH FASHION — FRESH & FAST PACKAGE
+
+১) ZIP extract করুন।
+২) ZIP-এর ভেতরের সব ফাইল GitHub repository-এর root-এ আপলোড করে আগের ফাইল replace করুন।
+৩) GitHub > Settings > Pages > Deploy from a branch > main > /(root) > Save।
+৪) Deploy হলে ওয়েবসাইটে Ctrl+Shift+R দিন।
+
+পুরোনো পণ্য, ব্যানার ও আপলোড করা লোগো সরাতে:
+১) Supabase Dashboard > SQL Editor খুলুন।
+২) এই ZIP-এর RESET-CATALOGUE-AND-BRANDING.sql ফাইলের SQL চালান। এতে products, hero_slides ও store_settings মুছে যাবে। অর্ডার ও admin account থাকবে।
+৩) পুরোনো ইমেজ ফাইলও স্থায়ীভাবে মুছতে Supabase > Storage-এ গিয়ে product-images, hero-images, logo-images bucket-এর সব object delete করুন।
+৪) নতুন cache key ব্যবহার হচ্ছে; পুরোনো browser cache আর দেখানো হবে না।
+
+গতি উন্নয়ন:
+- পণ্য, ব্যানার ও স্টোর সেটিংস আলাদা request-এ লোড হয়; ব্যানার/সেটিংসের জন্য পণ্য আটকে থাকবে না।
+- প্রথমেই default website render হয়; কোনো পুরোনো image/banner URL দেখানো হয় না।
+- Google Fonts-এর external dependency বাদ; system font ব্যবহার।
+- Admin-এ আপলোড করা বড় ছবি browser-এ WebP করে, সর্বোচ্চ 1200px-এ resize/compress করে Storage-এ পাঠানো হয়।
+- পণ্য/ব্যানার/সেটিংস আলাদাভাবে cache হয়।
+
+গুরুত্বপূর্ণ: GitHub Pages শুধু frontend host করে। Products, orders, admin login ও image storage-এর জন্য Supabase সচল থাকতে হবে। config.js-এ কেবল public anon/publishable key রাখবেন; service_role/secret key কখনো প্রকাশ করবেন না। SQL reset চালালে পণ্য/ব্যানার/স্টোর সেটিংসের রেকর্ড মুছে যাবে; অর্ডার ও admin account মুছবে না।
