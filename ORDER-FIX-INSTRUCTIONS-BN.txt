@@ -1,0 +1,22 @@
+MH FASHION — ORDER PERMISSION FIX (ORIGINAL COD VERSION)
+
+এই প্যাকেজটি আগের MH Fashion ওয়েবসাইটের মূল Cash on Delivery সংস্করণ থেকে তৈরি। এতে bKash/Nagad checkout যোগ করা হয়নি।
+
+কী পরিবর্তন:
+- অর্ডার সাবমিট করার পর আর anon customer হিসেবে orders টেবিল থেকে SELECT করা হয় না।
+- ব্রাউজারেই UUID তৈরি করে সেটি অর্ডারের ID হিসেবে INSERT করা হয়।
+- Admin order management আগের মতোই থাকে।
+
+DEPLOY:
+1. ZIP extract করুন।
+2. Netlify > আপনার site > Deploys > Deploy manually-তে যান।
+3. এই ফোল্ডারের ভেতরের index.html, script.js, style.css, config.js ইত্যাদি থাকা পুরো ফোল্ডার deploy করুন।
+
+SUPABASE:
+1. Supabase Dashboard > SQL Editor > New query।
+2. ORDER-PERMISSION-FIX.sql-এর সম্পূর্ণ SQL paste করে Run করুন।
+3. আগে এই একই permission fix চালিয়ে থাকলে পুনরায় চালানো নিরাপদ; এটি policy-টি পুনরায় তৈরি করে।
+
+সতর্কতা: supabase_setup.sql আবার চালাবেন না, Database reset/delete করবেন না, service_role key কখনো config.js-এ রাখবেন না।
+
+নোট: এই পরিবর্তনটি order INSERT permission error-এর জন্য। যদি আপনার Supabase-এ orders টেবিলের column নাম/ধরন এই প্যাকেজের schema থেকে আলাদা হয়ে থাকে, SQL policy-তে সামঞ্জস্য লাগতে পারে।

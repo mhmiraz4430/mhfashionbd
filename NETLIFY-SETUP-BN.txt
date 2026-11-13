@@ -1,0 +1,23 @@
+MH FASHION — NETLIFY DEPLOY PACKAGE
+
+আপলোড করার নিয়ম:
+1. এই ZIP ফাইলটি Extract করুন।
+2. Netlify-তে লগইন করে Add new site > Deploy manually নির্বাচন করুন।
+3. Extract করা MH-Fashion-Netlify ফোল্ডারটি (যার ভেতরে index.html আছে) drag-and-drop করুন। চাইলে ফোল্ডারের ভেতরের সব ফাইল একসাথে drag করুন।
+4. Deploy শেষ হলে Netlify একটি live website link দেবে।
+
+গুরুত্বপূর্ণ:
+- index.html, style.css, script.js এবং config.js একই root folder-এ থাকতে হবে।
+- Supabase URL ও public publishable/anon key config.js-এ সেট করা আছে। এটি frontend-এর public key; কখনো service_role/secret key ব্যবহার করবেন না।
+- Products, orders, admin login, banners ও image storage কাজ করার জন্য Supabase project সচল এবং প্রয়োজনীয় database tables, RLS policies ও Storage buckets তৈরি থাকতে হবে।
+- যদি Supabase database আগে থেকেই setup করা থাকে, শুধু Netlify deploy করলেই হবে; SQL আবার চালানোর প্রয়োজন নেই। নতুন/অসম্পূর্ণ database হলে Supabase Dashboard > SQL Editor-এ supabase_setup.sql চালান। SQL-টি বিদ্যমান পণ্য/অর্ডার মুছে ফেলার জন্য নয়।
+- Admin login-এর জন্য Supabase Auth user এবং public.store_admins (অথবা legacy school_admins) table-এ সেই user-এর UUID থাকতে হবে। SQL ফাইলের শেষের নির্দেশনাও দেখুন।
+- ওয়েবসাইট খোলার পর Ctrl+Shift+R দিয়ে hard refresh দিন।
+
+এই ZIP-এ frontend source files এবং database setup SQL অন্তর্ভুক্ত আছে। Netlify-তে ZIP upload করার সময় ZIP-এর ভেতরে থাকা ফাইলগুলো root-এ deploy হবে এমনভাবে Extract করে ফোল্ডারটি upload করুন।
+
+নতুন আপডেট (Database connection error fix):
+- এই সংস্করণে Supabase request একসাথে সর্বোচ্চ ২টি করে পাঠানো হয়।
+- সাময়িকভাবে “Too many connections issued to the database” এলে স্বয়ংক্রিয়ভাবে কয়েকবার retry করে।
+- পণ্য/স্লাইডার ফর্মে বারবার Save ক্লিক করলে duplicate request আটকানো হয়।
+- এটি frontend-এর অতিরিক্ত request চাপ কমায়; Supabase project-এর database connection limit/সার্ভার সমস্যা থাকলে Supabase Dashboard-এও পরীক্ষা করতে হবে।
